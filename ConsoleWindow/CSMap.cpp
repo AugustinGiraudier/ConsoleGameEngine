@@ -18,7 +18,7 @@ CSMap::CSMap(const unsigned int DimX, const unsigned int DimY, const char Defaul
 	_map = std::vector<std::vector<char>>(DimX, std::vector<char>(DimY, DefaultChar));
 }
 
-std::string CSMap::GetStr() const {
+std::string CSMap::Get_Str() const {
 	std::stringstream ss;
 	for (int y = 0; y < _Dimy; ++y) {
 		for (int x = 0; x < _Dimx; ++x) {
@@ -41,18 +41,18 @@ void CSMap::Full_Fill(char c) {
 		}
 }
 
-void CSMap::SetCharAtRow(char c, unsigned int Row_Id) {
+void CSMap::Set_Char_At_Row(char c, unsigned int Row_Id) {
 	for (int x = 0; x < _Dimx; ++x) {
 		_map[x][Row_Id] = c;
 	}
 }
-void CSMap::SetCharAtCol(char c, unsigned int Col_Id) {
+void CSMap::Set_Char_At_Col(char c, unsigned int Col_Id) {
 	for (int y = 0; y < _Dimy; ++y) {
 		_map[Col_Id][y] = c;
 	}
 }
 
-void CSMap::setStrAt(const std::string& str, unsigned int x, unsigned int y)
+void CSMap::Set_Str_At(const std::string& str, unsigned int x, unsigned int y)
 {
 	int i_str = 0;
 	for (int i_tab_x = x; i_tab_x < _Dimx && i_str < str.size(); ++i_tab_x) {

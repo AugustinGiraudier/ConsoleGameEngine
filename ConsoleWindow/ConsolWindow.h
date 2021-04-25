@@ -9,55 +9,188 @@
 #include "Hint.h"
 #include "CSMap.h"
 
-
-class ConsolWindow
+/**
+ * \brief Class encapsulant toute la gestion d'un moteur de jeu pour console Windows.
+ * 
+ * \author Augustin Giraudier
+ */
+class ConsoleGame
 {
 private:
-	static ConsolWindow* CW_Instance;
+	/**
+	 * \brief Instance unique de la classe.
+	 */
+	static ConsoleGame* _CW_Instance;
 
-	CSMap* map;
+	/**
+	 * \brief Objet conservant la map de charactères à afficher.
+	 */
+	CSMap* _Map;
 
-	//window size
-	unsigned int Window_Size_x = 130;
-	unsigned int Window_Size_y = 30;
+	/**
+	 * @biref Taille x de la fenêtre & de la map d'affichage en caractère.
+	 */
+	unsigned int _Window_Size_x = 130;
+	/**
+	* \brief Taille y de la fenêtre & de la map d'affichage en caractère.
+	*/
+	unsigned int _Window_Size_y = 30;
 
-	//update period
-	unsigned int m_fUpdatePeriod = 100;
+	/**
+	 * \brief Temps en millisecondes entre chaque affichege d'image.
+	 */
+	unsigned int _Update_Period = 100;
 
-	//default char
-	char default_char = ' ';
+	/** \brief Caractère par défaut de la map d'affichage */
+	char _Default_Char = ' ';
 
-	//thread d'affichage
-	std::thread* Display_Thread = nullptr;
-	bool StopDisplay = false;
+	/**
+	 * \brief Pointeur vers le thread d'affichage.
+	 */
+	std::thread* _Display_Thread = nullptr;
+	/**
+	 * \brief Permet d'arreter le thread d'affiche.
+	 */
+	bool _Stop_Display = false;
 
-	//fct
-	ConsolWindow() {}
-	~ConsolWindow();
-	void RecreateMap();
-	void DisplayMapRepete();
+	ConsoleGame();
+	~ConsoleGame();
+
+	/**
+	 * \brief Crée une nouvelle map d'affichage avec les paramètres actuels.
+	 */
+	void Recreate_Map();
+	/**
+	 * \brief Affiche la map à intervalle de temps régulier.
+	 * Note : vous pouvez paramétrer ce temps avec l'indice Window_Size et la fonction Set_Hint.
+	 */
+	void Display_Map_Repete();
 
 public:
 
-	//OPERATEURS
-	ConsolWindow(ConsolWindow& other) = delete;
-	void operator=(const ConsolWindow& other) = delete;
+	/*------------------------------------------------------------------------------*/
+	/*	PROCESSUS																	*/
+	/*------------------------------------------------------------------------------*/
 
-	//PROCESSUS
-	static ConsolWindow* GetConsolWindow();
-	void SetWindowHint(Hint* hint);
-	void QuitConsol();
+	/**
+	 * \brief Récupère l'instance unique de gestion de jeu.
+	 * 
+	 * \return l'instance unique de gestion de jeu
+	 */
+	static ConsoleGame* Get_Console_Game_Instance();
+
+	/**
+	 * \brief Permet d'appliquer une indication de construction du jeu.
+	 * 
+	 * \param hint Objet référencant l'indication à appliquer
+	 *  -- Exemples : Hint_Window_Size - Hint_Update_Period - Hint_Default_Char
+	 */
+	void Set_Hint(Hint* hint);
+
+	/**
+	 * \brief Permet d'arrêter correctement le processus.
+	 * 
+	 */
+	void Close_Console_Game();
 	
-	//	AFFICHAGE
+	/*------------------------------------------------------------------------------*/
+	/*	OUTILS																	*/
+	/*------------------------------------------------------------------------------*/
+
+	/**
+	 * \brief Récupération de la dimension x de la fenêtre et de la map d'affichage (en nombre de caractère).
+	 * 
+	 * \return la dimension x (en nombre de caractère)
+	 */
+	const unsigned int Get_Dim_X() const { return _Window_Size_x; }
+
+	/**
+	 * \brief Récupération de la dimension y de la fenêtre et de la map d'affichage (en nombre de caractère).
+	 *
+	 * \return la dimension y (en nombre de caractère)
+	 */
+	const unsigned int Get_Dim_Y() const { return _Window_Size_y; }
+
+	/**
+	 * \brief Récupération de la durée d'intervalle entre chaque affichage.
+	 * 
+	 * \return la durée d'intervalle entre chaque affichage
+	 */
+	const unsigned int Get_Update_Period() const { return _Update_Period; }
+
+	/*------------------------------------------------------------------------------*/
+	/*	AFFICHAGE																	*/
+	/*------------------------------------------------------------------------------*/
+
+	/**
+	 * \brief Lance la boucle infinie d'affichage.
+	 * 
+	 */
 	void Start_Display();
+
+	/**
+	 * \brief Stop la boucle d'affichage en cours.
+	 * 
+	 */
 	void Stop_Display();
+
+	/**
+	 * \brief Affiche l'image du buffer actuel.
+	 * 
+	 */
 	void Display_1_Frame();
 
-	//	DESSIN
-	void SetCharAt(char c, unsigned int x, unsigned int y);
+	/*------------------------------------------------------------------------------*/
+	/*	DESSIN																	*/
+	/*------------------------------------------------------------------------------*/
+
+	/**
+	 * \brief Permet de placer un charactère à des coordonnées dans le buffer d'affichage.
+	 * 
+	 * \param c : caractère à insérer
+	 * \param x	: position x
+	 * \param y : position y
+	 */
+	void Set_Char_At(char c, unsigned int x, unsigned int y);
+
+	/**
+	 * \brief Permet de remplir le buffer d'affichage avec un caractère.
+	 * 
+	 * \param c : caractère à insérer
+	 */
 	void Full_Fill(char c);
-	void SetCharAtRow(char c, unsigned int Row_Id);
-	void SetCharAtCol(char c, unsigned int Col_Id);
-	void setStrAt(const std::string& str, unsigned int x, unsigned int y);
+
+	/**
+	 * \brief Permet de remplir une ligne du buffer d'affichage avec un caractère.
+	 * 
+	 * \param c :		caractère à insérer
+	 * \param Row_Id :	index de la ligne à remplir
+	 */
+	void Set_Char_At_Row(char c, unsigned int Row_Id);
+
+	/**
+	 * \brief Permet de remplir une colonne du buffer d'affichage avec un caractère.
+	 *
+	 * \param c :		caractère à insérer
+	 * \param Col_Id :	index de la colonne à remplir
+	 */
+	void Set_Char_At_Col(char c, unsigned int Col_Id);
+
+	/**
+	 * \brief Permet d'insérer une chaine de caractère dans le buffer d'affiche à partir d'une coordonnée donnée.
+	 * 
+	 * \param str : chaine à afficher
+	 * \param x :	coordonnée x du premier caractère
+	 * \param y :	coordonnée y du premier caractère
+	 */
+	void set_Str_At(const std::string& str, unsigned int x, unsigned int y);
+
+
+	/*------------------------------------------------------------------------------*/
+	/*	OPERATEURS SUPPRIMES														*/
+	/*------------------------------------------------------------------------------*/
+
+	ConsoleGame(ConsoleGame& other) = delete;
+	void operator=(const ConsoleGame& other) = delete;
 };
 #endif

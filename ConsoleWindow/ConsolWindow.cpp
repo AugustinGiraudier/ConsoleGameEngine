@@ -1,112 +1,117 @@
 #include "ConsolWindow.h"
 
-ConsolWindow* ConsolWindow::CW_Instance;
+ConsoleGame* ConsoleGame::_CW_Instance;
 
-void ConsolWindow::RecreateMap()
+void ConsoleGame::Recreate_Map()
 {
-	delete map;
-	map = new CSMap(Window_Size_x, Window_Size_y, default_char);
+	delete _Map;
+	_Map = new CSMap(_Window_Size_x, _Window_Size_y, _Default_Char);
 }
 
-ConsolWindow::~ConsolWindow()
+ConsoleGame::~ConsoleGame()
 {
-	delete Display_Thread;
+	delete _Display_Thread;
+}
+ConsoleGame::ConsoleGame()
+{
+	Recreate_Map();
 }
 
-ConsolWindow* ConsolWindow::GetConsolWindow() {
-	if (ConsolWindow::CW_Instance == nullptr)
-		ConsolWindow::CW_Instance = new ConsolWindow;
-	return ConsolWindow::CW_Instance;
+ConsoleGame* ConsoleGame::Get_Console_Game_Instance() {
+	if (ConsoleGame::_CW_Instance == nullptr)
+		ConsoleGame::_CW_Instance = new ConsoleGame;
+	return ConsoleGame::_CW_Instance;
 }
 
-void ConsolWindow::Start_Display() {
-	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, (Window_Size_x*7.2) +32, (Window_Size_y*15.9) +58, SWP_SHOWWINDOW);
+void ConsoleGame::Start_Display() {
+	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, (_Window_Size_x*7.2) +32, (_Window_Size_y*15.9) +58, SWP_SHOWWINDOW);
+	SetConsoleOutputCP(65000);
 
-	if (map == nullptr)
-		RecreateMap();
+	if (_Map == nullptr)
+		Recreate_Map();
 
-	StopDisplay = false;
-	Display_Thread = new std::thread(&ConsolWindow::DisplayMapRepete, this);
+	_Stop_Display = false;
+	_Display_Thread = new std::thread(&ConsoleGame::Display_Map_Repete, this);
 }
 
-void ConsolWindow::DisplayMapRepete() {
+void ConsoleGame::Display_Map_Repete() {
 	for (;;) {
-		if (this->StopDisplay)
+		if (this->_Stop_Display)
 			return;
-		std::cout << "\t\r" << std::flush << map->GetStr();
-		std::this_thread::sleep_for(std::chrono::milliseconds(this->m_fUpdatePeriod));
+		std::cout << "\t\r" << std::flush << _Map->Get_Str();
+		std::this_thread::sleep_for(std::chrono::milliseconds(this->_Update_Period));
 	}
 }
 
-void ConsolWindow::SetWindowHint(Hint* hint) {
+void ConsoleGame::Set_Hint(Hint* hint) {
 
 	Hint_Types type = hint->GetHintType();
 
 	if (type == Hint_Types::Window_Size) {
 		Hint_Window_Size* hws = static_cast<Hint_Window_Size*>(hint);
-		this->Window_Size_x = hws->SizeX;
-		this->Window_Size_y = hws->SizeY;
-		RecreateMap();
+		this->_Window_Size_x = hws->SizeX;
+		this->_Window_Size_y = hws->SizeY;
+		Recreate_Map();
 		return;
 	}
 	else if ((type == Hint_Types::Update_Period)) {
 		Hint_Update_Period* hup = static_cast<Hint_Update_Period*>(hint);
-		m_fUpdatePeriod = hup->Period;
+		_Update_Period = hup->Period;
 		return;
 	}
 	else if ((type == Hint_Types::Default_Char)) {
 		Hint_Default_Char* hdc = static_cast<Hint_Default_Char*>(hint);
-		default_char = hdc->d_char;
-		RecreateMap();
+		_Default_Char = hdc->d_char;
+		Recreate_Map();
 		return;
 	}
 }
 
-void ConsolWindow::QuitConsol() {
-	if (CW_Instance != nullptr) {
-		CW_Instance->Stop_Display();
+void ConsoleGame::Close_Console_Game() {
+	if (_CW_Instance != nullptr) {
+		_CW_Instance->Stop_Display();
 	}
-	delete map;
-	delete ConsolWindow::CW_Instance;
+	delete _Map;
+	delete ConsoleGame::_CW_Instance;
 }
 
-void ConsolWindow::Stop_Display()
+void ConsoleGame::Stop_Display()
 {
-	this->StopDisplay = true;
-	if (Display_Thread->joinable())
-		Display_Thread->join();
+	this->_Stop_Display = true;
+	if (_Display_Thread->joinable())
+		_Display_Thread->join();
 	//delete Display_Thread;
 }
 
-void ConsolWindow::Display_1_Frame()
+void ConsoleGame::Display_1_Frame()
 {
-	std::cout << "\t\r" << std::flush << map->GetStr();
+	std::cout << "\t\r" << std::flush << _Map->Get_Str();
 }
 
-void ConsolWindow::SetCharAt(char c, unsigned int x, unsigned int y)
+void ConsoleGame::Set_Char_At(char c, unsigned int x, unsigned int y)
 {
-	if (x >= map->GetDimX() || y >= map->GetDimY()) {
+	if (x >= _Map->Get_Dim_X() || y >= _Map->Get_Dim_Y()) {
 		throw std::exception("ERREUR : Vous tentez d'écrire en dehors de l'écran...");
 	}
-	(*map)[x][y] = c;
+	(*_Map)[x][y] = c;
 }
 
-void ConsolWindow::Full_Fill(char c)
+void ConsoleGame::Full_Fill(char c)
 {
-	map->Full_Fill(c);
+	_Map->Full_Fill(c);
 }
 
-void ConsolWindow::SetCharAtRow(char c, unsigned int Row_Id)
+void ConsoleGame::Set_Char_At_Row(char c, unsigned int Row_Id)
 {
-	map->SetCharAtRow(c, Row_Id);
+	_Map->Set_Char_At_Row(c, Row_Id);
 }
 
-void ConsolWindow::SetCharAtCol(char c, unsigned int Col_Id)
+void ConsoleGame::Set_Char_At_Col(char c, unsigned int Col_Id)
 {
-	map->SetCharAtCol(c, Col_Id);
+	_Map->Set_Char_At_Col(c, Col_Id);
 }
 
-void ConsolWindow::setStrAt(const std::string& str, unsigned int x, unsigned int y)
+void ConsoleGame::set_Str_At(const std::string& str, unsigned int x, unsigned int y)
 {
-	map->setStrAt(str, x, y);
+	_Map->Set_Str_At(str, x, y);
 }
