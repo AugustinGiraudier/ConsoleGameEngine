@@ -185,6 +185,15 @@ public:
 	 */
 	void set_Str_At(const std::string& str, unsigned int x, unsigned int y);
 
+	/**
+	 * \brief Permet d'inérer une map CSMap (map de caractères) à des coordonnées dans le buffer d'affichage
+	 * le point de coordonnées correspond au coin suppérieur gauche de la CSMap.
+	 * 
+	 * \param map : map à dessiner
+	 * \param x :	coordonnée x du coin suppérieur gauche dans la map principale
+	 * \param y :	coordonnée y du coin suppérieur gauche dans la map principale
+	 */
+	void Set_CSMap_At(CSMap& map, unsigned int x, unsigned int y);
 
 	/*------------------------------------------------------------------------------*/
 	/*	OPERATEURS SUPPRIMES														*/
