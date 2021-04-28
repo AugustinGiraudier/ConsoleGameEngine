@@ -15,6 +15,8 @@ ConsoleGame::~ConsoleGame()
 ConsoleGame::ConsoleGame()
 {
 	Recreate_Map();
+	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, (_Window_Size_x * 7.2) + 32, (_Window_Size_y * 15.9) + 60, SWP_SHOWWINDOW);
+	SetConsoleOutputCP(65000);
 }
 
 ConsoleGame* ConsoleGame::Get_Console_Game_Instance() {
@@ -24,7 +26,7 @@ ConsoleGame* ConsoleGame::Get_Console_Game_Instance() {
 }
 
 void ConsoleGame::Start_Display() {
-	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, (_Window_Size_x*7.2) +32, (_Window_Size_y*15.9) +58, SWP_SHOWWINDOW);
+	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, (_Window_Size_x*7.2) +32, (_Window_Size_y*15.9) +60, SWP_SHOWWINDOW);
 	SetConsoleOutputCP(65000);
 
 	if (_Map == nullptr)
@@ -51,6 +53,7 @@ void ConsoleGame::Set_Hint(Hint* hint) {
 		Hint_Window_Size* hws = static_cast<Hint_Window_Size*>(hint);
 		this->_Window_Size_x = hws->SizeX;
 		this->_Window_Size_y = hws->SizeY;
+		SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, (_Window_Size_x * 7.2) + 32, (_Window_Size_y * 15.9) + 60, SWP_SHOWWINDOW);
 		Recreate_Map();
 		return;
 	}
@@ -71,6 +74,7 @@ void ConsoleGame::Close_Console_Game() {
 	if (_CW_Instance != nullptr) {
 		_CW_Instance->Stop_Display();
 	}
+	if(_Map != nullptr)
 	delete _Map;
 	delete ConsoleGame::_CW_Instance;
 }
@@ -78,7 +82,7 @@ void ConsoleGame::Close_Console_Game() {
 void ConsoleGame::Stop_Display()
 {
 	this->_Stop_Display = true;
-	if (_Display_Thread->joinable())
+	if (_Display_Thread != nullptr && _Display_Thread->joinable())
 		_Display_Thread->join();
 	//delete Display_Thread;
 }
@@ -115,3 +119,18 @@ void ConsoleGame::set_Str_At(const std::string& str, unsigned int x, unsigned in
 {
 	_Map->Set_Str_At(str, x, y);
 }
+
+void ConsoleGame::Set_CSMap_At(CSMap& map, unsigned int x, unsigned int y)
+{
+	int x_m = 0;
+	int y_m = 0;
+	for (int x_c = x; x_c < _Window_Size_x && x_m < map.Get_Dim_X(); ++x_c) {
+		y_m = 0;
+		for (int y_c = y; y_c < _Window_Size_y && y_m < map.Get_Dim_Y(); ++y_c) {
+			Set_Char_At(map[x_m][y_m], x_c, y_c);
+			++y_m;
+		}
+		++x_m;
+	}
+}
+
