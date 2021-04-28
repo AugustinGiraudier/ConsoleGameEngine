@@ -1,13 +1,37 @@
+﻿/**
+ *	 ██████╗ ██████╗       ███████╗███╗   ██╗ ██████╗ ██╗███╗   ██╗███████╗
+ *	██╔════╝██╔════╝       ██╔════╝████╗  ██║██╔════╝ ██║████╗  ██║██╔════╝
+ *	██║     ██║  ███╗█████╗█████╗  ██╔██╗ ██║██║  ███╗██║██╔██╗ ██║█████╗
+ *	██║     ██║   ██║╚════╝██╔══╝  ██║╚██╗██║██║   ██║██║██║╚██╗██║██╔══╝
+ *	╚██████╗╚██████╔╝      ███████╗██║ ╚████║╚██████╔╝██║██║ ╚████║███████╗
+ *	 ╚═════╝ ╚═════╝       ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝╚══════╝
+ *
+ * -------------------------------------------------------------------------
+ *
+ * \file Entête de la classe Hint.
+ *
+ * -------------------------------------------------------------------------
+ *
+ * \author Augustin Giraudier
+ *	---> https://github.com/AugustinGiraudier
+ *
+ * -------------------------------------------------------------------------
+ *
+ * \version 1.0
+ * \date Apr 28 2021
+ *
+ * -------------------------------------------------------------------------*/
+
 #ifndef HINT_H
 #define HINT_H
 
 /**
- * \brief Enum des diff�rentes indications pouvant �tres appliqu�es.
+ * \brief Enum des différentes indications pouvant êtres appliquées.
  */
 enum class Hint_Types {
 	Window_Size,	// Nouvelle taille de fenetre & buffer d'affichage
-	Update_Period,	// Nouvelle dur�e entre mises � jour d'affichage
-	Default_Char	// Nouveau caract�re par d�faut (pour le buffer d'affichage)
+	Update_Period,	// Nouvelle durée entre mises à jour d'affichage
+	Default_Char	// Nouveau caractère par défaut (pour le buffer d'affichage)
 };
 
 /** \brief Classe virtuelle pure servant de base aux classes d'indications */
@@ -16,7 +40,7 @@ private:
 	Hint_Types Type;
 public:
 	/**
-	 * \brief Permet de r�cup�rer le type d'indication.
+	 * \brief Permet de récupérer le type d'indication.
 	 */
 	virtual Hint_Types GetHintType() const = 0;
 	Hint(Hint_Types type);
@@ -28,15 +52,15 @@ public :
 	unsigned int SizeY;
 
 	/**
-	 * \brief cr�ation d'une indication de resize de la fen�tre et du buffer d'affichage.
+	 * \brief création d'une indication de resize de la fenêtre et du buffer d'affichage.
 	 * 
 	 * \param Size_x : nouvelle taille en abscisses
-	 * \param Size_y : nouvelle taille en ordonn�es
+	 * \param Size_y : nouvelle taille en ordonnées
 	 */
 	Hint_Window_Size(unsigned int Size_x, unsigned int Size_y);
 
 	/**
-	* \brief Permet de r�cup�rer le type d'indication.
+	* \brief Permet de récupérer le type d'indication.
 	*/
 	virtual Hint_Types GetHintType() const override;
 };
@@ -46,14 +70,14 @@ public:
 	unsigned int Period;
 
 	/**
-	 * \brief cr�ation d'une indication de dur�e entre mises � jour d'affichage.
+	 * \brief création d'une indication de durée entre mises à jour d'affichage.
 	 * 
-	 * \param period : nouvelle dur�e en millisecondes
+	 * \param period : nouvelle durée en millisecondes
 	 */
 	Hint_Update_Period(unsigned int period);
 
 	/**
-	* \brief Permet de r�cup�rer le type d'indication.
+	* \brief Permet de récupérer le type d'indication.
 	*/
 	virtual Hint_Types GetHintType() const override;
 };
@@ -63,14 +87,14 @@ public:
 	char d_char;
 
 	/**
-	 * \brief cr�ation d'une indication de caract�re par d�faut.
+	 * \brief création d'une indication de caractère par défaut.
 	 * 
-	 * \param dchar : caract�re par d�faut qui remplira le buffer d'affichage 
+	 * \param dchar : caractère par défaut qui remplira le buffer d'affichage 
 	 */
 	Hint_Default_Char(char dChar);
 
 	/**
-	* \brief Permet de r�cup�rer le type d'indication.
+	* \brief Permet de récupérer le type d'indication.
 	*/
 	virtual Hint_Types GetHintType() const override;
 };

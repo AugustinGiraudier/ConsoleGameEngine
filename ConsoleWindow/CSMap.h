@@ -1,3 +1,27 @@
+﻿/**
+ *	 ██████╗ ██████╗       ███████╗███╗   ██╗ ██████╗ ██╗███╗   ██╗███████╗
+ *	██╔════╝██╔════╝       ██╔════╝████╗  ██║██╔════╝ ██║████╗  ██║██╔════╝
+ *	██║     ██║  ███╗█████╗█████╗  ██╔██╗ ██║██║  ███╗██║██╔██╗ ██║█████╗
+ *	██║     ██║   ██║╚════╝██╔══╝  ██║╚██╗██║██║   ██║██║██║╚██╗██║██╔══╝
+ *	╚██████╗╚██████╔╝      ███████╗██║ ╚████║╚██████╔╝██║██║ ╚████║███████╗
+ *	 ╚═════╝ ╚═════╝       ╚══════╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝╚══════╝
+ *
+ * -------------------------------------------------------------------------
+ *
+ * \file Entête de la classe CSMap.
+ *
+ * -------------------------------------------------------------------------
+ *
+ * \author Augustin Giraudier
+ *	---> https://github.com/AugustinGiraudier
+ *
+ * -------------------------------------------------------------------------
+ *
+ * \version 1.0
+ * \date Apr 28 2021
+ *
+ * -------------------------------------------------------------------------*/
+
 #ifndef CSMAP_H
 #define CSMAP_H
 
@@ -14,7 +38,7 @@ class CSMap {
 private:
 
 	/**
-	 * \brief Donn�e brutes (tableau de char 2 dim).
+	 * \brief Donnée brutes (tableau de char 2 dim).
 	 */
 	std::vector<std::vector<char>> _map;
 
@@ -37,11 +61,11 @@ public:
 	/*------------------------------------------------------------------------------*/
 
 	/**
-	 * \brief construit un buffer d'affichage param�tr�.
+	 * \brief construit un buffer d'affichage paramétré.
 	 * 
 	 * \param DimX :		dimension du buffer en abscisses
-	 * \param DimY :		dimension du buffer en ordonn�es
-	 * \param DefaultChar : caract�re de remplissage
+	 * \param DimY :		dimension du buffer en ordonnées
+	 * \param DefaultChar : caractère de remplissage
 	 */
 	CSMap(const unsigned int DimX, const unsigned int DimY, const char DefaultChar = ' ');
 
@@ -56,21 +80,21 @@ public:
 	/*------------------------------------------------------------------------------*/
 
 	/**
-	 * \brief R�cup�ration de la dimension x du buffer.
+	 * \brief Récupération de la dimension x du buffer.
 	 * 
 	 * \return la dimension x du buffer
 	 */
 	const unsigned int Get_Dim_X() const { return _Dimx; }
 
 	/**
-	 * \brief R�cup�ration de la dimension y du buffer.
+	 * \brief Récupération de la dimension y du buffer.
 	 * 
 	 * \return la dimension y du buffer.
 	 */
 	const unsigned int Get_Dim_Y() const { return _Dimy; }
 
 	/**
-	 * \brief R�cup�ration du buffer sous forme de string.
+	 * \brief Récupération du buffer sous forme de string.
 	 * 
 	 * \return le buffer d'affichage sous forme de string
 	 */
@@ -81,34 +105,34 @@ public:
 	/*------------------------------------------------------------------------------*/
 
 	/**
-	 * \brief Permet de placer un charact�re � des coordonn�es dans le buffer d'affichage.
+	 * \brief Permet de placer un charactère à des coordonnées dans le buffer d'affichage.
 	 *
-	 * \param c : caract�re � ins�rer
+	 * \param c : caractère à insérer
 	 * \param x	: position x
 	 * \param y : position y
 	 */
 	void Set_Str_At(const std::string& str, unsigned int x, unsigned int y);
 
 	/**
-	 * \brief Permet de remplir le buffer d'affichage avec un caract�re.
+	 * \brief Permet de remplir le buffer d'affichage avec un caractère.
 	 *
-	 * \param c : caract�re � ins�rer
+	 * \param c : caractère à insérer
 	 */
 	void Full_Fill(char c);
 
 	/**
-	 * \brief Permet de remplir une ligne du buffer d'affichage avec un caract�re.
+	 * \brief Permet de remplir une ligne du buffer d'affichage avec un caractère.
 	 *
-	 * \param c :		caract�re � ins�rer
-	 * \param Row_Id :	index de la ligne � remplir
+	 * \param c :		caractère à insérer
+	 * \param Row_Id :	index de la ligne à remplir
 	 */
 	void Set_Char_At_Row(char c, unsigned int Row_Id);
 
 	/**
-	 * \brief Permet de remplir une colonne du buffer d'affichage avec un caract�re.
+	 * \brief Permet de remplir une colonne du buffer d'affichage avec un caractère.
 	 *
-	 * \param c :		caract�re � ins�rer
-	 * \param Col_Id :	index de la colonne � remplir
+	 * \param c :		caractère à insérer
+	 * \param Col_Id :	index de la colonne à remplir
 	 */
 	void Set_Char_At_Col(char c, unsigned int Col_Id);
 
@@ -117,10 +141,10 @@ public:
 	/*------------------------------------------------------------------------------*/
 
 	/**
-	 * \brief permet d'acc�der � une colonne du buffer.
+	 * \brief permet d'accéder à une colonne du buffer.
 	 * 
 	 * \param a : index de la colonne dans le buffer
-	 * \return la colonne � l'index a
+	 * \return la colonne à l'index a
 	 */
 	std::vector<char>& operator[](unsigned int a);
 	void operator=(const CSMap& other);
