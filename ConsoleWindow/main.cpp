@@ -1,4 +1,4 @@
-#include "ConsolWindow.h"
+#include "ConsoleGame.h"
 #include <string>
 
 int main() {
