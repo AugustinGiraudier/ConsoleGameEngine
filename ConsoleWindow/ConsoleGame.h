@@ -29,6 +29,7 @@
 #include <thread>
 #include <chrono>
 #include <exception>
+#include <functional>
 #include "Hint.h"
 #include "CSMap.h"
 
@@ -75,6 +76,11 @@ private:
 	 * \brief Permet d'arreter le thread d'affiche.
 	 */
 	bool _Stop_Display = false;
+
+	/**
+	 * \brief fonction qui sera appelée à chaque tour de boucle du moteur.
+	 */
+	std::function<void()> _Func_To_Repeat;
 
 	ConsoleGame();
 	~ConsoleGame();

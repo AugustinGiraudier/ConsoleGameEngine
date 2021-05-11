@@ -40,6 +40,8 @@ void ConsoleGame::Display_Map_Repete() {
 	for (;;) {
 		if (this->_Stop_Display)
 			return;
+		if (this->_Func_To_Repeat)
+			this->_Func_To_Repeat();
 		std::cout << "\t\r" << std::flush << _Map->Get_Str();
 		std::this_thread::sleep_for(std::chrono::milliseconds(this->_Update_Period));
 	}
@@ -66,6 +68,11 @@ void ConsoleGame::Set_Hint(Hint* hint) {
 		Hint_Default_Char* hdc = static_cast<Hint_Default_Char*>(hint);
 		_Default_Char = hdc->d_char;
 		Recreate_Map();
+		return;
+	}
+	else if ((type == Hint_Types::Repeat_Function)) {
+		Hint_Repeat_Function* hrf = static_cast<Hint_Repeat_Function*>(hint);
+		this->_Func_To_Repeat = hrf->_Function_To_Repeat;
 		return;
 	}
 }

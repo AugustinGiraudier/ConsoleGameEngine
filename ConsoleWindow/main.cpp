@@ -1,6 +1,12 @@
 #include "ConsoleGame.h"
 #include <string>
 
+
+void test() {
+	std::cout << "caca\n";
+}
+
+
 int main() {
 
 	// Objet Game console principal :
@@ -17,9 +23,11 @@ int main() {
 		Hint_Window_Size hws(My_Size_X, My_Size_Y);		// fenetre de 130 par 30 caractères
 		Hint_Update_Period hup(Time_Between_Update);	// 20 millisecondes entre chaque affichage
 		Hint_Default_Char hdc(' ');						// caractère ' ' par défaut
+		Hint_Repeat_Function hrf(test);					// fonction à appeler àchaque boucle
 		CW->Set_Hint(&hws);
 		CW->Set_Hint(&hup);
 		CW->Set_Hint(&hdc);
+		//CW->Set_Hint(&hrf);
 	}
 	
 	CW->Full_Fill('='); // on remplis le buffer de 'o'

@@ -24,6 +24,7 @@
 
 #ifndef HINT_H
 #define HINT_H
+#include<functional>
 
 /**
  * \brief Enum des différentes indications pouvant êtres appliquées.
@@ -31,7 +32,8 @@
 enum class Hint_Types {
 	Window_Size,	// Nouvelle taille de fenetre & buffer d'affichage
 	Update_Period,	// Nouvelle durée entre mises à jour d'affichage
-	Default_Char	// Nouveau caractère par défaut (pour le buffer d'affichage)
+	Default_Char,	// Nouveau caractère par défaut (pour le buffer d'affichage)
+	Repeat_Function	// Mise en place d'une fonction auto appelante
 };
 
 /** \brief Classe virtuelle pure servant de base aux classes d'indications */
@@ -92,6 +94,24 @@ public:
 	 * \param dchar : caractère par défaut qui remplira le buffer d'affichage 
 	 */
 	Hint_Default_Char(char dChar);
+
+	/**
+	* \brief Permet de récupérer le type d'indication.
+	*/
+	virtual Hint_Types GetHintType() const override;
+};
+
+class Hint_Repeat_Function : public Hint {
+public:
+	
+	std::function<void()> _Function_To_Repeat;
+
+	/**
+	 * \brief création d'une indication de fonction à répéter.
+	 *
+	 * \param Function_To_Repeat : fonction de type void() qui sera éxécutée à chaque tour de boucle du moteur
+	 */
+	Hint_Repeat_Function(std::function<void()> Function_To_Repeat);
 
 	/**
 	* \brief Permet de récupérer le type d'indication.

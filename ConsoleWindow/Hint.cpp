@@ -36,3 +36,12 @@ Hint_Default_Char::Hint_Default_Char(char dChar)
 Hint_Types Hint_Default_Char::GetHintType() const {
 	return Hint::GetHintType();
 }
+
+//class Hint_Repeat_Function
+Hint_Repeat_Function::Hint_Repeat_Function(std::function<void()> Function_To_Repeat)
+	:Hint(Hint_Types::Repeat_Function)
+	, _Function_To_Repeat(Function_To_Repeat)
+{}
+Hint_Types Hint_Repeat_Function::GetHintType() const {
+	return Hint::GetHintType();
+}
