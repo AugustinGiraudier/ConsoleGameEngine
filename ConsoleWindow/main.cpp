@@ -2,17 +2,12 @@
 #include <string>
 
 
-void test() {
-	std::cout << "caca\n";
-}
-
-
 int main() {
 
 	// Objet Game console principal :
 	ConsoleGame* CW = ConsoleGame::Get_Console_Game_Instance();
 
-	// Mes paramètres d'application :
+	// Mes paramï¿½tres d'application :
 	unsigned int My_Size_X = 60;
 	unsigned int My_Size_Y = 30;
 	unsigned int Time_Between_Update = 20;
@@ -20,10 +15,10 @@ int main() {
 
 	// indications de construction :
 	{ 
-		Hint_Window_Size hws(My_Size_X, My_Size_Y);		// fenetre de 130 par 30 caractères
+		Hint_Window_Size hws(My_Size_X, My_Size_Y);		// fenetre de 130 par 30 caractï¿½res
 		Hint_Update_Period hup(Time_Between_Update);	// 20 millisecondes entre chaque affichage
-		Hint_Default_Char hdc(' ');						// caractère ' ' par défaut
-		Hint_Repeat_Function hrf(test);					// fonction à appeler àchaque boucle
+		Hint_Default_Char hdc(' ');						// caractï¿½re ' ' par dï¿½faut
+		Hint_Repeat_Function hrf(test);					// fonction ï¿½ appeler ï¿½chaque boucle
 		CW->Set_Hint(&hws);
 		CW->Set_Hint(&hup);
 		CW->Set_Hint(&hdc);
@@ -32,7 +27,7 @@ int main() {
 	
 	CW->Full_Fill('='); // on remplis le buffer de 'o'
 
-	//création d'un contour d'image :
+	//crï¿½ation d'un contour d'image :
 	CW->Set_Char_At_Col('|', 0);
 	CW->Set_Char_At_Col('|', My_Size_X -1);
 	CW->Set_Char_At_Row('-', 0);
@@ -45,7 +40,7 @@ int main() {
 	//on attend 2 secondes
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
-	//on parcours tout l'écran (sauf le contour) avec un '>' qui se déplace :
+	//on parcours tout l'ï¿½cran (sauf le contour) avec un '>' qui se dï¿½place :
 	for (int y = 1; y < CW->Get_Dim_Y()-1; ++y) {
 		for (int x = 1; x < CW->Get_Dim_X()-1; ++x) {
 			int Old_X_Pos = x - 1;
@@ -54,7 +49,7 @@ int main() {
 			CW->Set_Char_At('>', x, y);				// on replace le nouveau
 			std::this_thread::sleep_for(std::chrono::milliseconds(Time_Between_Update)); // on patiente
 		}
-		CW->Set_Char_At(' ', CW->Get_Dim_X() - 2, y); // on efface l'ancien (à la ligne précédente)
+		CW->Set_Char_At(' ', CW->Get_Dim_X() - 2, y); // on efface l'ancien (ï¿½ la ligne prï¿½cï¿½dente)
 	}
 
 	CW->Stop_Display(); // on arrete l'affichage
@@ -66,7 +61,7 @@ int main() {
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000)); // on attend 3 secondes
 
 	//on prepare un message au centre :
-	std::string Str_To_Write = "Tu as gagné !!";
+	std::string Str_To_Write = "Tu as gagnÃ© !!";
 	CW->set_Str_At(Str_To_Write, (CW->Get_Dim_X() - Str_To_Write.size()) / 2, CW->Get_Dim_Y() / 2);
 
 	CW->Display_1_Frame(); // on affiche 1 fois l'image dans le buffer (avec le message)
