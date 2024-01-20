@@ -13,7 +13,7 @@ Ce projet est une librairie C++ qui permet de créer des jeux 2D temps réel sim
 - Afficher les caractères aux coordonnées souhaitées
 - Afficher des map (matrices de caractères) pré remplies
 
-## Liste des prjets réalisés avec cette bibliothèque
+## Liste des projets réalisés avec cette bibliothèque
 
 - tic tac toe
 - snake
